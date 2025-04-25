@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Crear Empleado - SB Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles/styles.css">
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+</head>
+<body class="sb-nav-fixed">
+    <!-- Navbar -->
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <!-- Contenido del navbar -->
+        <a class="navbar-brand" href="/">GEC Admin</a>
+        <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#">
+            <i class="fas fa-bars"></i>
+        </button>
+        <!-- Aquí puedes agregar más elementos del navbar -->
+    </nav>
+
+    <!-- Layout -->
+    <div id="layoutSidenav">
+        <!-- Sidebar -->
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <!-- Contenido del sidebar -->
+                        <a class="nav-link" href="/">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Dashboard
+                        </a>
+                        <a class="nav-link" href="/crear_empleado">
+                            <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
+                            Firma Contrato
+                        </a>
+                        <!-- Aquí puedes agregar más elementos del sidebar -->
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <!-- Footer del sidebar -->
+                    <div class="small">Logged in as:</div>
+                    <%= username %>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Contenido principal -->
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <h1 class="mt-4">Firma Contrato</h1>
+
+ <!-- Información del empleado -->
+ <div class="card p-3">
+    <h4>Datos del Empleado</h4>
+    <p><strong>Nombre:</strong> <%= empleado.nombre_apellidos %></p>
+    <p><strong>Cédula:</strong> <%= empleado.cedula %></p>
+    <p><strong>Cargo:</strong> <%= empleado.cargo %></p>
+</div>
+
+<!-- Información del contrato -->
+<div class="card p-3 mt-3">
+    <h4>Datos del Contrato</h4>
+    <p><strong>Fecha de inicio:</strong> <%= empleado.fecha_registro %></p>
+    <p><strong>Salario:</strong> <%= empleado.salario %></p>
+    <p><strong>Duración:</strong> <%= empleado.duracion %></p>
+</div>
+
+<!-- Área de firma -->
+<div class="mt-3">
+    <h4>Firma del Empleado</h4>
+    <canvas id="signature-pad" class="border"></canvas>
+    <button id="clear-signature" class="btn btn-warning mt-2">Borrar Firma</button>
+</div>
+
+<!-- Botón de guardar -->
+<button id="guardar" class="btn btn-success mt-3">Guardar y Generar PDF</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/4.0.0/signature_pad.umd.min.js"></script>
+<script src="/js/firma_contrato.js"></script>
+
+<%- include('layout/footer') %>

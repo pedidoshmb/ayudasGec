@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carta Laboral</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            padding: 20px;
+            border: 2px solid #000;
+            max-width: 800px;
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        .logo {
+            text-align: center;
+        }
+        .firma {
+            margin-top: 40px;
+            text-align: center;
+        }
+        .descargar-btn {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px;
+            text-align: center;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="logo">
+        <% if(locals.logoSrc) { %>
+          <img src="<%= logoSrc %>" alt="Logo de la empresa" width="200">
+        <% } else { %>
+          <img src="/img/logo_gec.png" alt="Logo de la empresa" width="200">
+        <% } %>
+      </div>
+    
+
+    <h1>GRUPO GESTIÓN EMPRESARIAL COLOMBIA S.A.S</h1>
+    <h2>NIT: 901346888-7 CERTIFICA</h2> 
+
+    <p>Que el Sr(a). <strong><%= empleado.nombre_apellidos %></strong>, identificado con el número <strong><%= empleado.id_empleado %></strong>,
+        labora en nuestra empresa de acuerdo a la siguiente informacion.
+
+        <h3>Fecha de inicio: <strong> <%= new Date(empleado.fecha_inicio).toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' }) %></strong></h3>
+        
+        <h3>Cargo: <stron><%= empleado.cargo %></stron></h3>
+
+        <h3>Tipo de Contrato: <strong>TERMINO INDEFINIDO</strong></h3>
+
+        <h3>Salario Devengado: <strong>$<%= empleado.salario %>+ Aux.Transp. Legal Vigente</strong> </h3>
+
+
+        <br>
+        <h3>Se firma en Santiago de Cali, el dia <%= fecha_actual %> </h3>
+        <br>
+        <h3>Cordialmente</h3>
+
+        <div class="firma">
+            <div class="logo">
+                <% if(locals.firmaSrc) { %>
+                  <img src="<%= firmaSrc %>" alt="Logo de la empresa" width="200">
+                <% } else { %>
+                  <img src="/img/firmagh.png" alt="Logo de la empresa" width="200">
+                <% } %>
+              </div>
+            <p>________________________</p>
+            <p>Ma. Del Pilar Jaramillo Pastrana - 
+               Jefe Gestión Humana - 
+               Cel:3105430393
+            </p>
+        </div>
+
+        <a href="/descargar_carta" class="descargar-btn">Descargar PDF</a>
+        
+
+</body>
+</html>

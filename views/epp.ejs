@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registrar EPP</title>
+  <link rel="stylesheet" href="/styles/styles.css"> <!-- Usa tu propio CSS -->
+  <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+  <script src="/js/script.js"></script>
+  <script>
+    function logout() {
+      window.location.href = "/logout";
+    }
+  </script>
+</head>
+<body>
+    <%- include('partials/sidebar') %>
+    <div class="dashboard-container">
+      <%- include('partials/header') %>
+
+      <form id="eppForm" action="/registrar_epp" method="POST">
+        <!-- Campo de selección de empleado -->
+        <div class="form-group">
+          <label for="empleado">Empleado:</label>
+          <select id="empleado" name="id_empleado" required>
+            <option value="" selected disabled>Seleccione un empleado</option>
+            <% empleados.forEach(empleado => { %>
+              <option value="<%= empleado.id %>"><%= empleado.nombre_apellidos %></option>
+            <% }); %>
+          </select>
+        </div>
+
+        <!-- Campos de texto para el EPP -->
+        <div class="form-group">
+          <label for="camisa">Camisa:</label>
+          <input type="text" id="camisa" name="camisa">
+        </div>
+
+        <div class="form-group">
+          <label for="pantalon">Pantalón:</label>
+          <input type="text" id="pantalon" name="pantalon">
+        </div>
+
+        <div class="form-group">
+          <label for="botas">Botas:</label>
+          <input type="text" id="botas" name="botas">
+        </div>
+
+       <!-- Área de firma -->
+       <div class="form-group">
+        <label>Firma de Recibido:</label>
+        <canvas id="signature-pad" width="400" height="200" style="border:1px solid #000;"></canvas>
+        <button type="button" id="clear-signature">Borrar Firma</button>
+        <input type="hidden" id="firmaInput" name="firma_recibido">
+      </div>
+
+      <!-- Botón de enviar -->
+      <div class="form-group">
+        <button type="submit">Enviar</button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

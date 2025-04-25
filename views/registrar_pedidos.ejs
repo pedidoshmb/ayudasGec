@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Pedidos</title>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet">
+    <link href="/styles/styles.css" rel="stylesheet">
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+</head>
+<body class="sb-nav-fixed">
+    <!-- Navbar -->
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">GEC Admin</a>
+        <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#">
+            <i class="fas fa-bars"></i>
+        </button>
+    </nav>
+
+    <div id="layoutSidenav">
+        <!-- Sidebar -->
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <a class="nav-link" href="/">Dashboarddddd</a>
+                        <a class="nav-link" href="/terceros">Tercerossssss</a>
+                        <a class="nav-link" href="/pedidos">Pedidosssss</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <div id="layoutSidenav_content">
+            <main class="container-fluid px-4">
+                <h1 class="mt-4">Gestión de Pedidos</h1>
+                
+                <!-- Botón para mostrar formulario -->
+                <button class="btn btn-primary mb-3" id="toggleFormBtn">Registrar Pedido</button>
+                
+                <!-- Buscador -->
+                <input type="text" id="searchPedidos" class="form-control mb-3" placeholder="Buscar pedido...">
+                
+                <!-- Tabla de pedidos -->
+                <table class="table table-bordered">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Número Pedido</th>
+                            <th>Fecha Registro</th>
+                            <th>Fecha Despacho</th>
+                            <th>Estado</th>
+                            <th>Prioridad</th>
+                            <th>Observación</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pedidosTable">
+                        <% if (pedidos && pedidos.length > 0) { %>
+                          <% pedidos.forEach(pedido => { %>
+                            <tr>
+                                <td><%= pedido.numero_pedido %></td>
+                                <td><%= pedido.fecha_registro %></td>
+                                <td><%= pedido.fecha_despacho %></td>
+                                <td><%= pedido.estado %></td>
+                                <td><%= pedido.prioridad %></td>
+                                <td><%= pedido.observacion %></td>
+                                <td>
+                                    <a href="/editar-pedido/<%= pedido.numero_pedido %>" class="btn btn-warning">✏️ Editar</a>
+                                    <button class="btn btn-danger" onclick="eliminarPedido(<%= pedido.numero_pedido %>)">🗑️ Eliminar</button>
+                                </td>
+                            </tr>
+                        <% }) %>
+                        <% } else { %>
+                          <tr>
+                            <td colspan="7" class="text-center">No hay pedidos registrados</td>
+                          </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+                
+                <!-- Formulario oculto para registrar nuevo pedido -->
+                <div id="pedidoForm" class="d-none">
+                    <h2>Registrar Pedido</h2>
+                    <form action="/pedidos/registrar" method="POST">
+                        <div class="mb-3">
+                            <label>Cliente</label>
+                            <select name="doc_id" class="form-control">
+                                <!-- Asegúrate de pasar los clientes desde el backend si es necesario -->
+                                <option value="1">Cliente 1</option>
+                                <option value="2">Cliente 2</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label>Número de Pedido</label>
+                            <input type="text" name="numero_pedido" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label>Fecha Registro</label>
+                            <input type="date" name="fecha_registro" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label>Fecha Despacho</label>
+                            <input type="date" name="fecha_despacho" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label>Estado</label>
+                            <select name="id_estado" class="form-control" required>
+                                <option value="1">Pendiente</option>
+                                <option value="2">Despachado</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label>Prioridad</label>
+                            <select name="prioridad" class="form-control" required>
+                                <option value="Alta">Alta</option>
+                                <option value="Media">Media</option>
+                                <option value="Baja">Baja</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label>Observación</label>
+                            <textarea name="observacion" class="form-control"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-success">Guardar</button>
+                    </form>
+                </div>
+
+            </main>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="/js/pedidos.js"></script>
+    <!-- Script para mostrar y ocultar el formulario -->
+    <script>
+        document.getElementById('toggleFormBtn').addEventListener('click', function() {
+            const formulario = document.getElementById('pedidoForm');
+            formulario.classList.toggle('d-none'); // Muestra/oculta el formulario
+        });
+    </script>
+</body>
+</html>

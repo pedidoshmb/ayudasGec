@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Crear Usuario - SB Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles/styles.css">
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+</head>
+<body class="sb-nav-fixed">
+    <!-- Navbar -->
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <!-- Contenido del navbar -->
+        <a class="navbar-brand" href="/">GEC Admin</a>
+        <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#">
+            <i class="fas fa-bars"></i>
+        </button>
+        <!-- Aquí puedes agregar más elementos del navbar -->
+    </nav>
+
+    <!-- Layout -->
+    <div id="layoutSidenav">
+        <!-- Sidebar -->
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <!-- Contenido del sidebar -->
+                        <a class="nav-link" href="/">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Dashboard
+                        </a>
+                        <a class="nav-link" href="/crear_usuario">
+                            <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
+                            Crear Usuario
+                        </a>
+                        <!-- Aquí puedes agregar más elementos del sidebar -->
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <!-- Footer del sidebar -->
+                    <div class="small">Logged in as:</div>
+                    <%= username %>
+                </div>
+            </nav>
+        </div>
+
+        <!-- Contenido principal -->
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <h1 class="mt-4">Crear Usuario</h1>
+                    <!-- Aquí va el formulario o contenido específico de crear_usuario -->
+                    <form action="/crear_usuario" method="POST">
+                      <div class="mb-3">
+                          <label for="nombre_completo" class="form-label">Nombre</label>
+                          <input type="text" class="form-control" id="nombre_completo" name="nombre" required>
+                      </div>
+                      <div class="mb-3">
+                          <label for="username" class="form-label">Usuario</label>
+                          <input type="text" class="form-control" id="username" name="usuario" required autocomplete="off">
+                      </div>
+                      <div class="mb-3">
+                          <label for="email" class="form-label">Correo Electrónico</label>
+                          <input type="email" class="form-control" id="email" name="email" required autocomplete="off">
+                      </div>
+                      <div class="mb-3">
+                          <label for="rol" class="form-label">Rol</label> 
+                          <select id="rol" name="rol" class="form-control" required>
+                            <option value="admin">Administrador</option>
+                            <option value="user">Usuario</option>
+                          </select>
+                      </div>
+                      <div class="mb-3">
+                          <label for="estado" class="form-label">Estado</label>
+                          <select id="estado" name="estado" class="form-control" required>
+                            <option value="1">Activo</option>
+                            <option value="0">Inactivo</option>
+                          </select>
+                      </div>
+                      <div class="mb-3">
+                          <label for="password" class="form-label">Contraseña</label>
+                          <input type="password" class="form-control" id="password" name="password" required>
+                      </div>
+                      <button type="submit" class="btn btn-primary">Crear Usuario</button>
+                  </form>
+                </div>
+            </main>
+
+            <!-- Footer -->
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; Your Website 2023</div>
+                        <div>
+                            <a href="#">Privacy Policy</a>
+                            &middot;
+                            <a href="#">Terms &amp; Conditions</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Scripts de la plantilla -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="/scripts/scripts.js"></script>
+</body>
+</html>

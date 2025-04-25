@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subir PDF</title>
+  <link rel="stylesheet" href="/styles/styles.css"> <!-- Vincula el archivo CSS -->
+</head>
+ <!-- Cerrar sesion del usaurio  -->
+<script>
+  function logout() {
+    window.location.href = "/logout";
+  }
+</script>
+<body>
+
+  <%- include('partials/sidebar') %>
+  <div class="dashboard-container">
+    <%- include('partials/header') %>
+
+
+    <!-- Contenido específico de subir_pdf -->
+    <h2>Subir PDF</h2>
+    <form action="/subir_pdf" method="POST" enctype="multipart/form-data">
+      <label for="usuario_id">Selecciona un usuario:</label>
+      <select name="usuario_id" id="usuario_id" required>
+          <% usuarios.forEach(usuario => { %>
+              <option value="<%= usuario.id %>"><%= usuario.username %></option>
+          <% }); %>
+      </select>
+      <br>
+      <label for="nombre_pdf">Nombre del PDF:</label>
+        <input type="text" name="nombre_pdf" required>
+
+      <label for="seccion">Sección:</label>
+      <select id="seccion" name="seccion" required>
+        <option value="nomina">Nómina</option>
+        <option value="hoja_de_vida">Hoja de Vida</option>
+        <option value="cartas">Cartas</option>
+      </select>
+      <br>
+      <label for="pdfFile">Seleccionar archivo PDF:</label>
+      <input type="file" id="pdfFile" name="pdfFile" accept="application/pdf" required>
+      <br>
+      <button type="submit">Subir PDF</button>
+    </form>
+  </div>
+</body>
+</html>

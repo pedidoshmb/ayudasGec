@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Crear Usuario - SB Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles/styles.css">
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+</head>
+<script src="/js/terceros.js"></script>
+<body class="sb-nav-fixed">
+    <!-- Navbar -->
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <!-- Contenido del navbar -->
+        <a class="navbar-brand" href="/">GEC Admin</a>
+        <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#">
+            <i class="fas fa-bars"></i>
+        </button>
+        <!-- Aquí puedes agregar más elementos del navbar -->
+    </nav>
+
+    <!-- Layout -->
+    <div id="layoutSidenav">
+        <!-- Sidebar -->
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <a class="nav-link" href="/">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Dashboard
+                        </a>
+                        <a class="nav-link" href="/terceros">
+                            <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
+                            Terceros
+                        </a>
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <div class="small">Logged in as:</div>
+                    <%= username %>
+                </div>
+            </nav>
+        </div>
+    
+        <!-- Contenido principal -->
+        <div id="layoutSidenav_content">
+            <main class="container-fluid px-4">
+                <h1 class="mt-4">Gestión de Terceros</h1>
+                
+                <!-- Botón para mostrar formulario -->
+                <button class="btn btn-primary mb-3" id="toggleFormBtn">Crear Tercero</button>
+    
+                <!-- Buscador -->
+                <input type="text" id="buscador" class="form-control mb-3" placeholder="Buscar por cédula o nombre">
+    
+                <!-- Tabla de terceros -->
+                <table class="table table-bordered">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Documento</th>
+                            <th>Razón Social</th>
+                            <th>Dirección</th>
+                            <th>Teléfono</th>
+                            <th>Celular</th>
+                            <th>Email</th>
+                            <th>Ciudad</th>
+                            <th>Contacto</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tablaTerceros">
+                        <% terceros.forEach(tercero => { %>
+                            <tr>
+                                <td><%= tercero.doc_id %></td>
+                                <td><%= tercero.razon_social %></td>
+                                <td><%= tercero.direccion %></td>
+                                <td><%= tercero.telefono %></td>
+                                <td><%= tercero.celular %></td>
+                                <td><%= tercero.email %></td>
+                                <td><%= tercero.ciudad %></td>
+                                <td><%= tercero.contacto %></td>
+                                <td>
+                                    <% if (tercero.estado) { %>
+                                        <span class="badge bg-success">Activo</span>
+                                    <% } else { %>
+                                        <span class="badge bg-danger">Inactivo</span>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <div class="d-flex gap-2">
+                                        <button class="btn btn-warning btn-sm editar-tercero" data-id="<%= tercero.doc_id %>">Editar</button>
+                                        <form action="/terceros/inactivar/<%= tercero.doc_id %>" method="POST">
+                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de inactivar este tercero?')">Inactivar
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+    
+                <!-- Formulario oculto -->
+                <div id="formularioCrear" style="display: none;">
+                    <h2 class="mt-4">Crear Tercero</h2>
+                    <form action="/terceros" method="POST" class="mb-4">
+                        
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Tipo Tercero</label>
+                                <select name="tipo_id_tercero_hidden" class="form-control">
+                                    <option value="1">Cliente</option>
+                                    <option value="0">Proveedor</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Documento</label>
+                                <input type="number" name="nuevo_doc_id" class="form-control" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Tipo Id</label>
+                                <select name="tipo_id" class="form-control">
+                                    <option value="NIT">NIT</option>
+                                    <option value="CC">CC</option>
+                                </select>
+                            </div>
+                        </div>
+                
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <label>Razón Social</label>
+                                <input type="text" name="razon_social" class="form-control" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Dirección</label>
+                                <input type="text" name="direccion" class="form-control" required>
+                            </div>
+                        </div>
+                
+                        <div class="row mt-3">
+                            <div class="col-md-4">
+                                <label>Celular</label>
+                                <input type="number" name="telefono" class="form-control" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Teléfono</label>
+                                <input type="number" name="celular" class="form-control" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Email</label>
+                                <input type="email" name="email" class="form-control" required>
+                            </div>
+                        </div>
+                
+                        <div class="row mt-3">
+                            <div class="col-md-4">
+                                <label>Ciudad</label>
+                                <input type="text" name="ciudad" class="form-control" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Contacto</label>
+                                <input type="text" name="contacto" class="form-control" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Estado</label>
+                                <select name="estado" class="form-control">
+                                    <option value="1">Activo</option>
+                                    <option value="0">Inactivo</option>
+                                </select>
+                            </div>
+                        </div>
+                
+                        <button type="submit" class="btn btn-success mt-3">Guardar</button>
+                    </form>
+                </div>
+
+                <!--FORMULARIO PARA ACTUALIZAR TERCEROS-->
+                <div id="formularioEditar" style="display: none;">
+                    <h2 class="mt-4">Editar Tercero</h2>
+                    <form action="/terceros/editar/" method="POST">
+                        <div class="row">
+                            <div class="row mt-3">
+                            <div class="col-md-4">
+                                <label>Tipo Tercero</label>
+                                <select id="editar_tipo_id_tercero" name="tipo_id_tercero" class="form-control">
+                                    <option value="1">Cliente</option>
+                                    <option value="0">Proveedor</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Documento</label>
+                                <input id="editar_doc_id" type="text" name="doc_id" class="form-control" required value="<%= terceros.doc_id %>" readonly>
+                            </div>
+                           
+                            <div class="col-md-4">
+                                <label>Razón Social</label>
+                                <input id="editar_razon_social" type="text" name="razon_social" class="form-control" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Dirección</label>
+                                <input id="editar_direccion" type="text" name="direccion" class="form-control">
+                            </div>
+                            </div>
+                            <div class="row mt-3">
+                            <div class="col-md-4">
+                                <label>Teléfono</label>
+                                <input id="editar_telefono" type="text" name="telefono" class="form-control">
+                            </div>
+                            <div class="col-md-4">
+                                <label>Celular</label>
+                                <input id="editar_celular" type="text" name="celular" class="form-control">
+                            </div>
+                            <div class="col-md-4">
+                                <label>Email</label>
+                                <input id="editar_email" type="email" name="email" class="form-control">
+                            </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Ciudad</label>
+                                <input id="editar_ciudad" type="text" name="ciudad" class="form-control">
+                            </div>
+                            <div class="col-md-4">
+                                <label>Contacto</label>
+                                <input id="editar_contacto" type="text" name="contacto" class="form-control">
+                            </div>
+                
+                        <button type="submit" class="btn btn-primary mt-3">Actualizar</button>
+                    </form>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script>
+        // Mostrar/Ocultar formulario
+        document.getElementById('toggleFormBtn').addEventListener('click', function() {
+            var form = document.getElementById('formularioCrear');
+            form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
+        });
+    
+        // Buscador de terceros
+        document.getElementById('buscador').addEventListener('keyup', function() {
+            var filtro = this.value.toLowerCase();
+            var filas = document.querySelectorAll('#tablaTerceros tr');
+    
+            filas.forEach(function(fila) {
+                var textoFila = fila.innerText.toLowerCase();
+                fila.style.display = textoFila.includes(filtro) ? '' : 'none';
+            });
+        });
+    </script>
+    

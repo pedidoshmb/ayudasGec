@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Crear Usuario - SB Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles/styles.css">
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+</head>
+<body class="sb-nav-fixed">
+    <!-- Navbar -->
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <!-- Contenido del navbar -->
+        <a class="navbar-brand" href="/">GEC Admin</a>
+        <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#">
+            <i class="fas fa-bars"></i>
+        </button>
+        <!-- Aquí puedes agregar más elementos del navbar -->
+    </nav>
+
+    <!-- Layout -->
+    <div id="layoutSidenav">
+        <!-- Sidebar -->
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <!-- Contenido del sidebar -->
+                        <a class="nav-link" href="/">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Dashboard
+                        </a>
+                        <a class="nav-link" href="/dashboard">
+                            <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
+                            Panel Usuario
+                        </a>
+                        <!-- Aquí puedes agregar más elementos del sidebar -->
+                    </div>
+                </div>
+                <div class="sb-sidenav-footer">
+                    <!-- Footer del sidebar -->
+                    <div class="small">Logged in as:</div>
+                    <%= username %>
+                </div>
+            </nav>
+        </div>
+<div class="container-fluid px-4">
+  <h1 class="mt-4">Panel de Usuario</h1>
+  <ol class="breadcrumb mb-4">
+      <li class="breadcrumb-item active">Documentos disponibles</li>
+  </ol>
+
+  <!-- Sección de Nómina -->
+  <div class="card mb-4">
+      <div class="card-header">
+          <i class="fas fa-file-invoice-dollar me-1"></i> Desprendibles de Pago
+      </div>
+      <div class="card-body">
+          <ul class="list-group">
+              <% if (pdfsPorSeccion && pdfsPorSeccion.nomina && pdfsPorSeccion.nomina.length > 0) { %>
+                  <% pdfsPorSeccion.nomina.forEach(function(pdf) { %>
+                      <li class="list-group-item">
+                          <a href="<%= pdf.ruta_pdf %>" target="_blank"><%= pdf.nombre_pdf %></a>
+                      </li>
+                  <% }); %>
+              <% } else { %>
+                  <li class="list-group-item text-muted">No hay archivos disponibles en esta sección.</li>
+              <% } %>
+          </ul>
+      </div>
+  </div>
+
+  <!-- Sección de Hoja de Vida -->
+  <div class="card mb-4">
+      <div class="card-header">
+          <i class="fas fa-id-badge me-1"></i> Hoja de Vida
+      </div>
+      <div class="card-body">
+          <ul class="list-group">
+              <% if (pdfsPorSeccion && pdfsPorSeccion.hoja_de_vida && pdfsPorSeccion.hoja_de_vida.length > 0) { %>
+                  <% pdfsPorSeccion.hoja_de_vida.forEach(function(pdf) { %>
+                      <li class="list-group-item">
+                          <a href="<%= pdf.ruta_pdf %>" target="_blank"><%= pdf.nombre_pdf %></a>
+                      </li>
+                  <% }); %>
+              <% } else { %>
+                  <li class="list-group-item text-muted">No hay archivos disponibles en esta sección.</li>
+              <% } %>
+          </ul>
+      </div>
+  </div>
+
+  <!-- Sección de Otros Documentos -->
+  <div class="card mb-4">
+      <div class="card-header">
+          <i class="fas fa-folder-open me-1"></i> Otros Documentos
+      </div>
+      <div class="card-body">
+          <ul class="list-group">
+              <% if (pdfsPorSeccion && pdfsPorSeccion.cartas && pdfsPorSeccion.cartas.length > 0) { %>
+                  <% pdfsPorSeccion.cartas.forEach(function(pdf) { %>
+                      <li class="list-group-item">
+                          <a href="<%= pdf.ruta_pdf %>" target="_blank"><%= pdf.nombre_pdf %></a>
+                      </li>
+                  <% }); %>
+              <% } else { %>
+                  <li class="list-group-item text-muted">No hay archivos disponibles en esta sección.</li>
+              <% } %>
+          </ul>
+      </div>
+  </div>
+</div>
